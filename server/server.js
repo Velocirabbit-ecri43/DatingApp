@@ -5,6 +5,7 @@ const { Pool } = require("pg");
 const e = require("express"); // ???
 const path = require("path");
 const fs = require("fs");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000; // keep open
@@ -45,6 +46,7 @@ app.post("/register", async (req, res) => {
       }
       res.status(201).json({ message: "Registration successful" });
     } else {
+      //dress this up pretty
       res.status(400).json({ error: "personalInterests should be an array" });
     }
   } catch (error) {
@@ -141,8 +143,6 @@ app.get("/search", async (req, res) => {
       //if users found, we need to write output to storage.txt
       fs.writeFileSync("./server/public/storage.txt", JSON.stringify(output));
       res.redirect("http://localhost:8080/"); // redirect to '/' route
-      fs.writeFileSync("./server/public/storage.txt", JSON.stringify(output));
-      res.redirect("http://localhost:8080/");
       // res.status(200).send("Hi Hadrian");
     }
   } catch (error) {
