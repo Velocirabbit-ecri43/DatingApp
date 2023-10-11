@@ -1,18 +1,25 @@
+/**
+ * @jest-environment jsdom
+ */
+import React from "react";
 import { render, screen } from "@testing-library/react";
+import { jestDom } from 'jest-environment-jsdom';
 
 import Matches from "../src/components/Matches";
-import { beforeEach } from "node:test";
-import { toBeInTheDocument } from "@testing-library/jest-dom/matchers";
+import '@testing-library/jest-dom';
+
 
 describe('Matches rendering?', () => {
-  beforeEach(async () => {
-    const matches = await render(
+  let matches;
+  
+  beforeAll(() => {
+    matches = render(
       <Matches />
     )
   })
 
   test('Renders matches component', () => {
-    const matchesHeader = screen.queryByText('Matches');
+    const matchesHeader = matches.getByText('Matches');
     expect(matchesHeader).toBeInTheDocument();
   })
 })
