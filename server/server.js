@@ -1,15 +1,16 @@
 const express = require("express");
+const bodyParser = require("body-parser"); //outdated
 const cors = require("cors");
 const { Pool } = require("pg");
+const e = require("express"); // ???
 const path = require("path");
 const fs = require("fs");
-require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // keep open
 
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // look into
+app.use(bodyParser.json()); //oudated (app.use(express.json()))
 app.use(express.static(path.join(__dirname, "public")));
 
 const pool = new Pool({
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Dating App"); // You can customize this response
 });
 
-//register USER
+//register USER  /// move to controller
 app.post("/register", async (req, res) => {
   const { username, password, personalInterests } = req.body;
 
@@ -65,6 +66,7 @@ app.post("/login", async (req, res) => {
     if (user.rows.length === 0) {
       return res.status(401).json({ message: "Authentication failed" });
     } else {
+      //sends back first instance of user match
       res.json(user.rows[0]);
     }
   } catch (error) {
@@ -73,6 +75,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
+///This might be where we fix the SIKE page
 app.get("/matches", async (req, res) => {
   res.sendFile(path.resolve(__dirname, "../src/components/Matches.jsx"));
 });
@@ -82,11 +85,14 @@ app.get("/matches", async (req, res) => {
 //   console.log(interests.rows);
 // });
 
+//sike page:
 app.get("/connect", async (req, res) => {
   res.sendFile(path.resolve(__dirname, "../src/SIKE.html"));
 });
 
 app.get("/search", async (req, res) => {
+  //expect input
+  //expect output
   const { preference1, preference2, preference3 } = req.query;
   const interestArr = [preference1, preference2, preference3];
 
@@ -134,6 +140,8 @@ app.get("/search", async (req, res) => {
     } else {
       //if users found, we need to write output to storage.txt
       fs.writeFileSync("./server/public/storage.txt", JSON.stringify(output));
+      res.redirect("http://localhost:8080/"); // redirect to '/' route
+      fs.writeFileSync("./server/public/storage.txt", JSON.stringify(output));
       res.redirect("http://localhost:8080/");
       // res.status(200).send("Hi Hadrian");
     }
@@ -143,6 +151,8 @@ app.get("/search", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = server;
