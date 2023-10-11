@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   updateState,
   selectState,
   updateStateAsync,
-} from '../src/features/profileState/profileStateSlice';
+} from "../src/reduxSlices/profileStateSlice";
 
-import Profiles from './components/profiles.jsx';
+import Profiles from "./components/profiles.jsx";
 
 const PrefPage = () => {
   //Grabbing the state and setting up dispatch
@@ -32,30 +32,30 @@ const PrefPage = () => {
     e.preventDefault();
 
     //Grabs response from storage.txt in server/public folder
-    const response = await fetch('http://localhost:8080/storage.txt');
+    const response = await fetch("http://localhost:8080/storage.txt");
     const result = await response.json();
     dispatch(updateStateAsync(result));
     console.log([currentState]);
   };
 
   return (
-    <div className='pref-container'>
-      <div className='title'>Findr</div>
-      <div className='quote'>
+    <div className="pref-container">
+      <div className="title">Findr</div>
+      <div className="quote">
         <div>Whatchu want in your potential shawty? </div>
         Choose up to three interests:
       </div>
       <form
-        className='submit-form'
-        action='http://localhost:3000/search'
-        method='GET'
+        className="submit-form"
+        action="http://localhost:3000/search"
+        method="GET"
       >
-        <label for='preference1'>
+        <label for="preference1">
           <input
-            name='preference1'
-            class='prefbox'
-            placeholder='Your first interest...'
-            id='pref-box-1'
+            name="preference1"
+            class="prefbox"
+            placeholder="Your first interest..."
+            id="pref-box-1"
           />
           {/* <select>
             <option
@@ -70,30 +70,30 @@ const PrefPage = () => {
             ))}
           </select> */}
         </label>
-        <label for='preference2'>
+        <label for="preference2">
           <input
-            name='preference2'
-            class='prefbox'
-            placeholder='Your second interest...'
-            id='pref-box-2'
+            name="preference2"
+            class="prefbox"
+            placeholder="Your second interest..."
+            id="pref-box-2"
           />
         </label>
-        <label for='preference3'>
+        <label for="preference3">
           <input
-            name='preference3'
-            class='prefbox'
-            placeholder='Your third interest...'
-            id='pref-box-3'
+            name="preference3"
+            class="prefbox"
+            placeholder="Your third interest..."
+            id="pref-box-3"
           />
         </label>
-        <button className='primary' type='submit'>
+        <button className="primary" type="submit">
           Match Me!
         </button>
       </form>
-      <button className='secondary' onClick={handleClick}>
+      <button className="secondary" onClick={handleClick}>
         Show me my potential matches
       </button>
-      <div className='profile-main-container'>
+      <div className="profile-main-container">
         {currentState.map((profile, index) => (
           <Profiles profile={currentState} index={index} />
         ))}
