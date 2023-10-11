@@ -1,17 +1,65 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUsername,
+  setPassword,
+  setAuthenticated,
+  setLang,
+  setFocus,
+  setSkill,
+} from "../reduxSlices/signupSlice.js";
+import { Navigate } from "react-router-dom";
 
 const Signup = () => {
-  const handleFormSubmit = () => {
-    return;
+  // react hook for signup slice
+  //   const { username } = useSelector((state) => state.signup);
+  const dispatch = useDispatch();
+  // function to handle form submit
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // send profile information in body of request
+      const body = {
+        username: e.target[0].value,
+        password: e.target[1].value,
+        lang: [e.target[2].value],
+        focus: e.target[3].value,
+        skill: e.target[4].value,
+      };
+      console.log("body:", body);
+      // send post request to /signup
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify(body),
+      });
+      // parse result into json and save as the current user
+      const user = await response.json();
+      // if response was successful update state with all profile
+      if (response.status === 200) {
+        dispatch(setUsername(user.username));
+        dispatch(setAuthenticated(true));
+        dispatch(setLang(user.lang[0])); // currently only works with one language
+        dispatch(setFocus(user.focus));
+        dispatch(setSkill(user.skill));
+      }
+    } catch (err) {
+      console.log("ERROR on form submit: ", err);
+    }
   };
 
   return (
     <div className="signup-box">
       <h1>Sign Up!</h1>
       <form className="submit-form" onSubmit={handleFormSubmit}>
+        <label for="username">Username:</label>
         <input type="text" name="username" placeholder="Username" />
+        <label for="password">Password:</label>
         <input type="password" name="password" placeholder="Password" />
-        <select name="Coding Language" id="" className="profile-select">
+        <label for="lang">Practice Languages:</label>
+        <select name="lang" className="profile-select">
           <option value="JavaScript" className="profile-option">
             JavaScript
           </option>
@@ -31,7 +79,8 @@ const Signup = () => {
             PHP
           </option>
         </select>
-        <select name="Focus" id="" className="profile-select">
+        <label for="focus">Focus:</label>
+        <select name="focus" className="profile-select">
           <option value="Frontend" className="profile-select">
             Frontend
           </option>
@@ -45,7 +94,8 @@ const Signup = () => {
             Data Structures & Algorithms
           </option>
         </select>
-        <select name="Skill" id="" className="profile-select">
+        <label for="skill">Skill Level:</label>
+        <select name="skill" className="profile-select">
           <option value="Beginner" className="profile-select">
             Beginner
           </option>

@@ -1,6 +1,7 @@
 import React from "react";
 import LoginPage from "./routes/LoginPage.jsx";
 import SignupPage from "./routes/SignupPage.jsx";
+import MatchesPage from "./routes/MatchesPage.jsx";
 import "./styles.scss";
 import ReactDOM from "react-dom";
 import { loginStore } from "./reduxStores/loginStore.js";
@@ -14,6 +15,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/matches" element={<MatchesPage />} />
     </Routes>
   );
 };

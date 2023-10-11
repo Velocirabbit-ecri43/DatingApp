@@ -16,11 +16,11 @@ const Login = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const loginEndpoint = "http://localhost:3000/login";
+    //const loginEndpoint = "http://localhost:3000/login";
     const username = e.target.username.value;
     const password = e.target.password.value;
     try {
-      const response = await fetch(loginEndpoint, {
+      const response = await fetch("/login", {
         method: "POST",
         body: JSON.stringify({ username, password }),
         headers: {
@@ -30,6 +30,7 @@ const Login = () => {
 
       if (response.status === 401) {
         dispatch(setAuthenticated(false));
+        alert("Authentication failed.");
       } else if (response.ok) {
         dispatch(setAuthenticated(true));
       }
