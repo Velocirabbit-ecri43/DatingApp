@@ -6,7 +6,7 @@ const fs = require("fs");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // keep open
 
 app.use(cors());
 app.use(express.json());
@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to Dating App"); // You can customize this response
 });
 
-//register USER
-app.post("/register", async (req, res) => {
+//register USER  /// move to controller
+app.post('/register', async (req, res) => {
   const { username, password, personalInterests } = req.body;
 
   try {
@@ -44,7 +44,8 @@ app.post("/register", async (req, res) => {
       }
       res.status(201).json({ message: "Registration successful" });
     } else {
-      res.status(400).json({ error: "personalInterests should be an array" });
+      //dress this up pretty
+      res.status(400).json({ error: 'personalInterests should be an array' });
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -65,6 +66,7 @@ app.post("/login", async (req, res) => {
     if (user.rows.length === 0) {
       return res.status(401).json({ message: "Authentication failed" });
     } else {
+      //sends back first instance of user match
       res.json(user.rows[0]);
     }
   } catch (error) {
@@ -73,8 +75,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/matches", async (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../src/components/Matches.jsx"));
+///This might be where we fix the SIKE page
+app.get('/matches', async (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../src/components/Matches.jsx'));
 });
 
 // app.get('/interests', async (req, res) => {
@@ -82,11 +85,14 @@ app.get("/matches", async (req, res) => {
 //   console.log(interests.rows);
 // });
 
-app.get("/connect", async (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../src/SIKE.html"));
+//sike page:
+app.get('/connect', async (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../src/SIKE.html'));
 });
 
-app.get("/search", async (req, res) => {
+app.get('/search', async (req, res) => {
+  //expect input
+  //expect output
   const { preference1, preference2, preference3 } = req.query;
   const interestArr = [preference1, preference2, preference3];
 
@@ -133,8 +139,8 @@ app.get("/search", async (req, res) => {
       return res.status(404).json({ message: "No users found" });
     } else {
       //if users found, we need to write output to storage.txt
-      fs.writeFileSync("./server/public/storage.txt", JSON.stringify(output));
-      res.redirect("http://localhost:8080/");
+      fs.writeFileSync('./server/public/storage.txt', JSON.stringify(output));
+      res.redirect('http://localhost:8080/'); // redirect to '/' route
       // res.status(200).send("Hi Hadrian");
     }
   } catch (error) {
@@ -143,6 +149,8 @@ app.get("/search", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = server;
