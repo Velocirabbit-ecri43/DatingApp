@@ -14,6 +14,7 @@ app.use(cors()); // look into
 app.use(bodyParser.json()); //oudated (app.use(express.json()))
 app.use(express.static(path.join(__dirname, "public")));
 
+//construct new Pool instance
 const pool = new Pool({
   connectionString: process.env.URL,
 });
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 
 //register USER  /// move to controller
 app.post("/register", async (req, res) => {
-  const { username, password, personalInterests } = req.body;
+  const { username, password } = req.body;
 
   try {
     // Insert the user into the 'users' table
