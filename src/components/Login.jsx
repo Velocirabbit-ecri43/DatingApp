@@ -40,19 +40,17 @@ const Login = () => {
 
   return (
     <div className="Login-container">
-      <div>
-        <h1>Log in to your profile </h1>
-        <form className="submit-form" onSubmit={handleFormSubmit}>
-          <input type="text" name="username" placeholder="Username" />
-          <input type="password" name="password" placeholder="Password" />
-          <button id="login" className="primary" type="submit">
-            Log in to find your match
-          </button>
-        </form>
-        <Link to="/signup">
-          <button className="signup-btn">Sign Up!</button>
-        </Link>
-      </div>
+      <h1>Log in to your profile </h1>
+      <form className="submit-form" onSubmit={handleFormSubmit}>
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <button id="login" className="primary" type="submit">
+          Log in to find your match
+        </button>
+      </form>
+      <Link to="/signup">
+        <button className="signup-btn">Sign Up!</button>
+      </Link>
     </div>
   );
 };
