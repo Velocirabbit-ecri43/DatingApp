@@ -41,12 +41,11 @@ const Login = () => {
 
   return (
     <div className="Login-container">
-      <h1>Log in to your profile </h1>
       <form className="submit-form" onSubmit={handleFormSubmit}>
         <input type="text" name="username" placeholder="Username" />
         <input type="password" name="password" placeholder="Password" />
         <button id="login" className="primary" type="submit">
-          Log in to find your match
+          Log in to find your pair programming partner!
         </button>
       </form>
       <Link to="/signup">
