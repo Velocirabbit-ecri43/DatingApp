@@ -2,6 +2,7 @@ import React from "react";
 import MatchesContainer from "../containers/MatchesContainer.jsx";
 import { useDispatch } from "react-redux";
 import { updateMatches } from "../reduxSlices/matchesSlice.js";
+import Navbar from "../components/Navbar.jsx";
 
 const MatchesPage = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const MatchesPage = () => {
 
   return (
     <div className="matches">
+      <Navbar />
       <h1>.join Matches</h1>
       <MatchesContainer />
     </div>

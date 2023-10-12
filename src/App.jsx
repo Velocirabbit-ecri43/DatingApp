@@ -3,6 +3,7 @@ import LoginPage from "./routes/LoginPage.jsx";
 import SignupPage from "./routes/SignupPage.jsx";
 import MatchesPage from "./routes/MatchesPage.jsx";
 import OtherProfilePage from "./routes/OtherProfilePage.jsx";
+import MyProfilePage from "./routes/MyProfilePage.jsx";
 import "./styles.scss";
 import ReactDOM from "react-dom";
 import { loginStore } from "./reduxStores/loginStore.js";
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/matches" element={<MatchesPage />} />
       <Route path="/userProfile/:username" element={<OtherProfilePage />} />
+      <Route path="/myProfile" element={<MyProfilePage />} />
     </Routes>
   );
 };
