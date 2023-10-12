@@ -3,11 +3,13 @@ import React from "react";
 const Match = ({ username, lang, focus, skill }) => {
   return (
     <div className="match-box">
-      <p>Name: username</p>
+      <p>Name: {username}</p>
       <p>Language: {lang[0]}</p>
-      <a id="connect" href="http://localhost:8080/connect">
-        Connect with Me!
-      </a>
+      <p>Focus: {focus}</p>
+      <p>Skill: {skill}</p>
+      <Link to={`/userProfile/${username}`}>
+        <button className="see-profile">See Profile</button>
+      </Link>
     </div>
   );
 };

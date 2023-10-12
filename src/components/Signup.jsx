@@ -7,7 +7,7 @@ import {
   setLang,
   setFocus,
   setSkill,
-} from "../reduxSlices/signupSlice.js";
+} from "../reduxSlices/userSlice.js";
 import { Navigate } from "react-router-dom";
 
 const Signup = () => {

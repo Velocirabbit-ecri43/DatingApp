@@ -6,7 +6,7 @@ import {
   setUsername,
   setPassword,
   setAuthenticated,
-} from "../reduxSlices/loginSlice";
+} from "../reduxSlices/userSlice";
 
 //Does not function, should render fields for username and password
 //needs to have route sent to /preferences.jsx if authenticared = true;
@@ -17,14 +17,16 @@ const Login = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     //const loginEndpoint = "http://localhost:3000/login";
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+    const body = {
+      username: e.target[0].value,
+      password: e.target[1].value,
+    };
     try {
       const response = await fetch("/login", {
         method: "POST",
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(body),
         headers: {
-          "Content-Type": "application/json",
+          "Content-type": "application/json; charset=UTF-8",
         },
       });
 

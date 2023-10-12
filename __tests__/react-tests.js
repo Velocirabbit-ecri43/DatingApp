@@ -15,7 +15,7 @@ import signupReducer, {
   setLang,
   setFocus,
   setSkill,
-} from "../src/reduxSlices/signupSlice.js";
+} from "../src/reduxSlices/userSlice.js";
 
 describe("Matches rendering?", () => {
   let matches;

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import stateReducer from "../reduxSlices/profileStateSlice";
-import signupReducer from "../reduxSlices/signupSlice";
+import signupReducer from "../reduxSlices/userSlice";
 import loginReducer from "../reduxSlices/loginSlice";
 import matchesReducer from "../reduxSlices/matchesSlice";
 

@@ -18,6 +18,7 @@ const MatchesContainer = () => {
         lang={match.lang}
         focus={match.focus}
         skill={match.skill}
+        key={i}
       />
     );
     i++;
