@@ -54,11 +54,11 @@ const Signup = () => {
     <div className="signup-box">
       <h1>Sign Up!</h1>
       <form className="submit-form" onSubmit={handleFormSubmit}>
-        <label for="username">Username:</label>
+        <label htmlForfor="username">Username:</label>
         <input type="text" name="username" placeholder="Username" />
-        <label for="password">Password:</label>
+        <label htmlfor="password">Password:</label>
         <input type="password" name="password" placeholder="Password" />
-        <label for="lang">Practice Languages:</label>
+        <label htmlfor="lang">Practice Languages:</label>
         <select name="lang" className="profile-select">
           <option value="JavaScript" className="profile-option">
             JavaScript

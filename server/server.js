@@ -27,7 +27,7 @@ app.post("/login", userController.logInUser, (req, res) => {
 });
 
 ///This might be where we fix the SIKE page
-app.get("/matches", userController.getMatches, (req, res) => {
+app.get("/matches/:username", userController.getMatches, (req, res) => {
   return res.status(200).json(res.locals.matches);
 });
 

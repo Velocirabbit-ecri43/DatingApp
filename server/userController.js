@@ -1,5 +1,5 @@
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
 dotenv.config();
 const URI = process.env.URI;
 
@@ -9,7 +9,7 @@ const pool = new Pool({
   connectionString: URI,
 });
 
-console.log('process.env: ', URI);
+console.log("process.env: ", URI);
 
 //User middleware
 
@@ -28,7 +28,7 @@ userController.signUpUser = async (req, res, next) => {
   try {
     // Insert the user into the 'users' table
     const createNewUser = await pool.query(
-      'INSERT INTO users (username, password, focus, skill_level) VALUES ($1, $2, $3, $4) RETURNING username, focus, skill_level',
+      "INSERT INTO users (username, password, focus, skill_level) VALUES ($1, $2, $3, $4) RETURNING username, focus, skill_level",
       [username, password, focus, skill]
     );
 
@@ -108,15 +108,16 @@ userController.getMatches = async (req, res, next) => {
     const getMatches = await pool.query(
       `
     WITH mainUser AS (
-      SELECT username, skill_level, focus FROM  users
+      SELECT username, skill_level, focus FROM users
       WHERE  username = $1
     ) 
-    SELECT username, skill_level, focus from users 
-    WHERE users.focus = mainUser.focus OR _users.skill_level = mainUser.skill_level AND users.username <> mainUser.username;`,
+    SELECT users.username, users.skill_level, users.focus FROM users, mainUser 
+    WHERE users.focus = mainUser.focus OR users.skill_level = mainUser.skill_level AND users.username <> mainUser.username;`,
       [username]
     );
     // save match data in res.locals
-    res.locals.matches = getMatches.row;
+    res.locals.matches = getMatches.rows;
+    console.log("res.locals.matches", res.locals.matches);
     return next();
   } catch (error) {
     return next({
