@@ -13,20 +13,18 @@ const Navbar = () => {
 
   return (
     <nav className="nav-bar">
-      <ol>
-        <li className="nav-link">
-          <Link to="/myProfile">
-            <button className="nav-btn">Profile</button>
-          </Link>
-        </li>
-        <li className="nav-link">
-          <Link to="/">
-            <button className="nav-btn" onClick={handleSignout}>
-              Sign Out
-            </button>
-          </Link>
-        </li>
-      </ol>
+      <li className="nav-link">
+        <Link to="/myProfile">
+          <button className="nav-btn">Profile</button>
+        </Link>
+      </li>
+      <li className="nav-link">
+        <Link to="/">
+          <button className="nav-btn" onClick={handleSignout}>
+            Sign Out
+          </button>
+        </Link>
+      </li>
     </nav>
   );
 };

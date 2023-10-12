@@ -18,7 +18,6 @@ const MatchesContainer = () => {
     matchesToDisplay.push(
       <Match
         username={match.username}
-        lang={match.lang}
         focus={match.focus}
         skill={match.skill}
         key={i}

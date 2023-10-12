@@ -28,7 +28,7 @@ userController.signUpUser = async (req, res, next) => {
   try {
     // Insert the user into the 'users' table
     const createNewUser = await pool.query(
-      "INSERT INTO users (username, password, focus, skill_level) VALUES ($1, $2, $3, $4) RETURNING username, focus, skill_level",
+      "INSERT INTO users (username, password, focus, skill) VALUES ($1, $2, $3, $4) RETURNING username, focus, skill",
       [username, password, focus, skill]
     );
 
@@ -60,7 +60,7 @@ userController.logInUser = async (req, res, next) => {
   // get user matching username and password
   try {
     const checkUser = await pool.query(
-      `SELECT username, focus, skill_level FROM users WHERE username = $1 AND password = $2`,
+      `SELECT username, focus, skill FROM users WHERE username = $1 AND password = $2`,
       [username, password]
     );
 
@@ -108,11 +108,11 @@ userController.getMatches = async (req, res, next) => {
     const getMatches = await pool.query(
       `
     WITH mainUser AS (
-      SELECT username, skill_level, focus FROM users
+      SELECT username, skill, focus FROM users
       WHERE  username = $1
     ) 
-    SELECT users.username, users.skill_level, users.focus FROM users, mainUser 
-    WHERE users.focus = mainUser.focus OR users.skill_level = mainUser.skill_level AND users.username <> mainUser.username;`,
+    SELECT users.username, users.skill, users.focus FROM users, mainUser 
+    WHERE users.focus = mainUser.focus OR users.skill = mainUser.skill AND users.username <> mainUser.username;`,
       [username]
     );
     // save match data in res.locals
