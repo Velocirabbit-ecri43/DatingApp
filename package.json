@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest --verbose",
     "start": "node server/server.js",
     "build": "NODE_ENV=production webpack",
     "dev": "concurrently \"nodemon server/server.js\" \"NODE_ENV=development webpack serve --open --hot\"",
@@ -40,6 +40,7 @@
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "nodemon": "^3.0.1",
