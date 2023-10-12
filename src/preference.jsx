@@ -6,7 +6,7 @@ import {
   updateStateAsync,
 } from "../src/reduxSlices/profileStateSlice";
 
-import Profiles from "./components/profiles.jsx";
+import Profiles from "./components/Match.jsx";
 
 const PrefPage = () => {
   //Grabbing the state and setting up dispatch

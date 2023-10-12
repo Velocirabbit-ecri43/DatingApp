@@ -4,21 +4,26 @@
 //  return <div wvefber /> {matchArray} <div/>
 import React from "react";
 
-const MatchContainer = ({ username }) => {
-  const [matches, setMatches] = useState([]);
+const MatchesContainer = () => {
+  //   const [matches, setMatches] = useState([]);
 
-  useEffect(() => {
-    fetch(`/maches/${username}`)
-      .then((res) => res.json())
-      .then((data) => setMatches(data));
-  }),
-    [username];
-  return (
-    <div>
-      <h1>Interests In Common</h1>
-      <p>Match Name: {data.name}</p>
-      <p>Matching Interests</p>
-      <ul></ul>
-    </div>
-  );
+  const { matches } = useSelector((state) => state.matches);
+
+  const matchesToDisplay = [];
+  let i = 0;
+  for (let match of matches) {
+    matchesToDisplay.push(
+      <Match
+        username={match.username}
+        lang={match.lang}
+        focus={match.focus}
+        skill={match.skill}
+      />
+    );
+    i++;
+  }
+
+  return <div className="matches-container">{matchesToDisplay}</div>;
 };
+
+export default MatchesContainer;
