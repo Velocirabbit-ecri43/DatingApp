@@ -3,15 +3,18 @@
 // iterate through the array, and render a Match component for each object and push to an array
 //  return <div wvefber /> {matchArray} <div/>
 import React from "react";
+import { useSelector } from "react-redux";
+import Match from "../components/Match.jsx";
 
 const MatchesContainer = () => {
   //   const [matches, setMatches] = useState([]);
 
   const { matches } = useSelector((state) => state.matches);
-
+  console.log("matches:", matches);
   const matchesToDisplay = [];
   let i = 0;
   for (let match of matches) {
+    console.log("match: ", match);
     matchesToDisplay.push(
       <Match
         username={match.username}
