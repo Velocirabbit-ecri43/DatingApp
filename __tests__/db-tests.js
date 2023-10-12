@@ -12,44 +12,44 @@ import { Pool } from "pg";
 import dotenv from "dotenv";
 dotenv.config();
 
-const testQuery = async (query) => {
+const testQuery = async (queryStr, params) => {
   const pool = new Pool({
     connectionString: process.env.URL,
   });
 
+  const client = await pool.connect();
+
   try {
-    await pool.connect();
-    return await pool.request().query(`
-      BEGIN TRANSACTION
-      ${query}
-      ROLLBACK TRANSACTION
-    `);
+    await client.query(`BEGIN`);
+    const res = client.query(queryStr, params);
+    await client.query("ROLLBACK");
+    return res;
   } finally {
-    await pool.release();
+    await client.release();
   }
 };
 
 describe("Register works okay!", () => {
   describe('POST request to "/register" creates new user in database', () => {
     const createNewUser = `
-      INSERT INTO users (username, password, skillLevel, focus)
-    VALUES ("testUser", "testPW", "testLevel", "testFocus");`;
+      INSERT INTO users (username, password, skill_level, focus)
+    VALUES ('testUser', 'testPW', 'testLevel', 'testFocus') RETURNING username, password, skill_level, focus;`;
 
     it("Should create a new user", async () => {
-      const { newUser } = await testQuery(`${createNewUser};
-        SELECT username, password, skillLevel, focus FROM users
-        WHERE username = 'testname';`);
+      // const newUser = await testQuery(`${createNewUser};
+      //   SELECT username, password, skill_level, focus FROM users
+      //   WHERE username = 'testUser';`);
 
-      console.log("newUser: ", newUser);
+      const newUser = await testQuery(createNewUser);
 
-      expect(newUser).toStrictEqual([
-        expect.objectContaining({
-          username: "testuser",
-          password: "testPW",
-          skillLevel: "testLevel",
-          focus: "testFocus",
-        }),
-      ]);
+      console.log("newUser.rows[0]", newUser.rows[0]);
+
+      expect(newUser.rows[0]).toStrictEqual({
+        username: "testUser",
+        password: "testPW",
+        skill_level: "testLevel",
+        focus: "testFocus",
+      });
     });
   });
 });
